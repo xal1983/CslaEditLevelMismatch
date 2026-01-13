@@ -19,10 +19,13 @@ namespace EditLevelMismatch
         {
             InitializeComponent();
             originalInvoice = Program.Host.Services.GetRequiredService<IDataPortal<Invoice>>().Create();
-            invoiceBindingSource.DataSource = originalInvoice;
+            SetDataSource(originalInvoice);
         }
 
-
+        private void SetDataSource(Invoice i)
+        {
+            invoiceBindingSource.DataSource = i;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -36,7 +39,10 @@ namespace EditLevelMismatch
             Console.WriteLine(
                 $"Original cost   EditLevel: {((IUndoableObject)originalCost).EditLevel}   FieldManager EditLevel: {originalCost.GetFieldManager().EditLevel}\n" +
                 $"Cloned cost     EditLevel: {((IUndoableObject)clonedCost).EditLevel}   FieldManager EditLevel: {clonedCost.GetFieldManager().EditLevel}");
-            Console.WriteLine();
+
+            var newForm = new Form1();
+            newForm.SetDataSource(clonedInvoice);
+            newForm.ShowDialog();
         }
     }
 }
