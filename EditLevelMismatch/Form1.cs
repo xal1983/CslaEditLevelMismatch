@@ -40,9 +40,16 @@ namespace EditLevelMismatch
                 $"Original cost   EditLevel: {((IUndoableObject)originalCost).EditLevel}   FieldManager EditLevel: {originalCost.GetFieldManager().EditLevel}\n" +
                 $"Cloned cost     EditLevel: {((IUndoableObject)clonedCost).EditLevel}   FieldManager EditLevel: {clonedCost.GetFieldManager().EditLevel}");
 
-            var newForm = new Form1();
-            newForm.SetDataSource(clonedInvoice);
-            newForm.ShowDialog();
+            try
+            {
+                var newForm = new Form1();
+                newForm.SetDataSource(clonedInvoice);
+                newForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error showing cloned invoice");
+            }
         }
     }
 }
